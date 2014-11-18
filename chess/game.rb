@@ -31,7 +31,8 @@ class Game
 
   def move
     begin
-      coords = player.get_move
+      coords = player.get_move #coords = [[0,1],[1,1]]
+      check_move(coords)
     rescue InvalidMoveError
       puts "Invalid Input"
       retry
@@ -39,18 +40,11 @@ class Game
       puts "That move will put you in check!"
       retry
     end
-    process(coords)
+
+    process(coords) #handles actual transposition and deletion
   end
 
   def process(coords)
-    coords.map! do |coord|
-      coord.split('').map do |n|
-        CONVERSION[n]
-      end
-    end
-
-    from, to = coords
-
 
   end
 
@@ -58,7 +52,17 @@ class Game
 
   end
 
-  def get_move
+  def check_move(pro_move)
+    start, finish = pro_move
+
+    #raise InvalidMoveErrpr
+    if p({num} num.between?() )
+
+
+
+    if (!@board[start].nil?) || (@board[start].color != turn)
+      raise InvalidMoveError
+
 
   end
 

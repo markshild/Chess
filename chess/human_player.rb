@@ -26,16 +26,22 @@ CONVERSION = {
   end
 
   def get_move
-    gets.comp
+    puts "Enter start and end coordinates Ex a7 b7"
+    unp_move = gets.chomp.downcase.split # unp_move = ["a7,"b7"]
+    move = self.class.translate(unp_move) #move = [[0,1],[1,1]]
   end
 
-  def translate(coords)
+  protected
+
+  def self.translate(pos)
+
     coords.map! do |coord|
       coord.split('').map do |n|
         CONVERSION[n]
       end
     end
 
+    pos
   end
 
 
