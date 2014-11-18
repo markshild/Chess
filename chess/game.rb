@@ -1,4 +1,5 @@
-require "./dependencies.rb" 
+require "./dependencies.rb"
+
 
 class Game
 
@@ -29,7 +30,28 @@ class Game
   end
 
   def move
-    @current_move
+    begin
+      coords = player.get_move
+    rescue InvalidMoveError
+      puts "Invalid Input"
+      retry
+    rescue CheckError
+      puts "That move will put you in check!"
+      retry
+    end
+    process(coords)
+  end
+
+  def process(coords)
+    coords.map! do |coord|
+      coord.split('').map do |n|
+        CONVERSION[n]
+      end
+    end
+
+    from, to = coords
+
+
   end
 
   def checkmate?
@@ -50,12 +72,12 @@ class Game
 
   def display
     display_array = @board.render.map.with_index do |row, rowidx|
-      row.unshift(rowidx+1).join(" ")
+      row.unshift(8 - rowidx).join(" ")
     end
 
     display_array.unshift("  A B C D E F G H")
 
-    puts display
+    puts display_array
   end
 
 
