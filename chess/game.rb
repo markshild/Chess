@@ -1,3 +1,5 @@
+require "dependencies.rb" 
+
 class Game
 
   def initialize(player1,player2)
@@ -57,17 +59,17 @@ class Game
   end
 
 
-  def play
-    until checkmate? || draw?
-      @board.render
-      get_move(@current_move)
-      check?
-
-      move(#receives from get_move)
-      switch_turn
-
-    end
-  end
+  # def play
+  #   until checkmate? || draw?
+  #     @board.render
+  #     get_move(@current_move)
+  #     check?
+  #
+  #     move(#receives from get_move)
+  #     switch_turn
+  #
+  #   end
+  # end
 
 
 end

@@ -1,0 +1,6 @@
+require "game.rb"
+require "board.rb"
+require "pieces.rb"
+require "sliding_pieces.rb"
+require "stepping_pieces.rb"
+require "pawn.rb"

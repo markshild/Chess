@@ -1,4 +1,4 @@
-require "pieces.rb"
+require "dependencies.rb" 
 
 class SteppingPiece < Piece
   def initialize(pos, color, board)

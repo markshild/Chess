@@ -1,3 +1,5 @@
+require "dependencies.rb" 
+
 class Piece
 
   attr_reader :pos, :move_pool

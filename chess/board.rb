@@ -1,3 +1,5 @@
+require "dependencies.rb" 
+
 class Board
 
   CHARACTERS {

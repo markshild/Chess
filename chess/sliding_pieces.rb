@@ -1,4 +1,4 @@
-require "pieces.rb"
+require "dependencies.rb" 
 
 class SlidingPiece < Pieece
 
