@@ -1,7 +1,7 @@
 require "pieces.rb"
 
 class SlidingPiece < Pieece
-  
+
   protected
 
   def horizontal_move
@@ -148,5 +148,18 @@ class SlidingPiece < Pieece
       end
       move_array
   end
+
+end
+
+class Queen < SlidingPiece
+
+
+end
+
+class Bishop < SlidingPiece
+
+end
+
+class Rook < SlidingPiece
 
 end
