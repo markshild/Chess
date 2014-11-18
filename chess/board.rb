@@ -1,7 +1,19 @@
 class Board
 
   CHARACTERS {
-    "nil" =>
+    "nil" =>  ,
+    "white pawn" => ♙ ,
+    "black pawn" => ♟ ,
+    "white rook" => ♖ ,
+    "black rook" => ♜ ,
+    "white bishop" => ♗ ,
+    "black bishop" => ♝ ,
+    "white knight" => ♘ ,
+    "black knight" => ♞ ,
+    "white queen" => ♕ ,
+    "black queen" => ♛ ,
+    "white king" => ♔ ,
+    "black king" => ♚ ,
   }
 
   attr_reader :black_pieces, :white_pieces, :black_king, :white_king
@@ -49,21 +61,11 @@ class Board
 
     @grid.map do |row| #set to variable
       row.map do |space|
-        case space.class
-        when Pawn
-          CHARACTERS["Pawn"].colorize(COLORS[space.color])
-        when Rook
-          CHARACTERS["Rook"].colorize(COLORS[space.color])
-        when Knight
-          CHARACTERS["Knight"].colorize(COLORS[space.color])
-        when Bishop
-          CHARACTERS["Bishop"].colorize(COLORS[space.color])
-        when Queen
-          CHARACTERS["Queen"].colorize(COLORS[space.color])
-        when King
-          CHARACTERS["King"].colorize(COLORS[space.color])
-        else
+
+        if space.nil?
           CHARACTERS["nil"].colorize(:red)
+        else
+          CHARACTERS["#{space.color.to_s} #{space.class.to_s.downcase}"]
         end
 
       end
