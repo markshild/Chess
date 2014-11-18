@@ -10,17 +10,17 @@ class Game
     @current_move = :white
   end
 
-  def check? #Checks if current_move player's king is in check
-    if @current_move == :white
+  def check?(board, color) #Checks if current_move player's king is in check, maybe should instead take a board parameter
+    if color == :white
 
-      @board.black_pieces.each do |bp|
+      board.black_pieces.each do |bp|
         check = bp.move_pool.include?(@board.white_king.pos)
         return true if check
       end
 
     else
 
-      @board.white_pieces.each do |wp|
+      board.white_pieces.each do |wp|
         check = wp.move_pool.include?(@board.black_king.pos)
         return true if check
       end
