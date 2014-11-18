@@ -1,16 +1,15 @@
-class Pieces
+class Piece
 
-  def initialize(pos, color)
+  attr_reader :pos, :move_pool
+
+  def initialize(pos, color, board)
     @pos = pos
     @color = color
-    generate_move_pool
+    @board = board
+    move_pool
   end
 
   def move_pool
-
-  end
-
-  def generate_move_pool
 
   end
 

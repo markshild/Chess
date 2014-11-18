@@ -3,8 +3,8 @@ require "pieces.rb"
 class Pawn < Piece
 
 
-  def pawn_moves
-    moves = []
+  def move_pool
+    @move_pool = []
     if self.color = :black && (@pos[0]+1 <= 7)
       moves << [@pos[0]+1,@pos[1]] if @Board[@pos[0]+1,@pos[1]].nil?
       [[@pos[0]+1,@pos[1]-1], [@pos[0]+1,@pos[1]+1]].each do |move|
@@ -19,7 +19,7 @@ class Pawn < Piece
       end
     end
 
-    moves
+    @move_pool
   end
 
 

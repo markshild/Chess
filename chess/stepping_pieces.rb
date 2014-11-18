@@ -36,6 +36,8 @@ class King < SteppingPiece
     ]
   end
 
+  
+
 
 end
 
@@ -53,6 +55,8 @@ class Knight < SteppingPiece
     [ 2,  1]
     ]
   end
+
+
 
 
 end

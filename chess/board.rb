@@ -1,8 +1,17 @@
 class Board
 
+  attr_reader :black_pieces, :white_pieces, :black_king, :white_king
+
   def initialize
-    @current_move = :white
     start_board
+  end
+
+  def black_pieces
+    @black_pieces = @grid.flatten.select {|piece| !piece.nil? && piece.color == :black}
+  end
+
+  def white_pieces
+    @white_pieces = @grid.flatten.select {|piece| !piece.nil? && piece.color == :white}
   end
 
 
@@ -18,8 +27,13 @@ class Board
     [[7,2],[7,5].each {|pos| @board[pos] = Bishop.new(pos,:white,self)}
     @board[0,3] = Queen.new(pos,:black,self)
     @board[7,3] = Queen.new(pos,:white,self)
-    @board[0,4] = King.new(pos,:black,self)
-    @board[7,4] = King.new(pos,:white,self)
+    
+    @black_king = King.new(pos,:black,self)
+    @board[0,4] = @black_king
+
+    @white_king = King.new(pos,:white,self)
+    @board[7,4] = @white_king
+
   end
 
   def [](pos)

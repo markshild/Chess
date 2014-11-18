@@ -152,14 +152,19 @@ class SlidingPiece < Pieece
 end
 
 class Queen < SlidingPiece
-
-
+  def move_pool
+    @move_pool = uphill_move.concat(downhill_move) + horizontal_move.concat(vertical_move)
+  end
 end
 
 class Bishop < SlidingPiece
-
+  def move_pool
+    @move_pool = uphill_move.concat(downhill_move)
+  end
 end
 
 class Rook < SlidingPiece
-
+  def move_pool
+    @move_pool = horizontal_move.concat(vertical_move)
+  end
 end
