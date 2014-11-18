@@ -1,5 +1,9 @@
 class Board
 
+  CHARACTERS {
+    "nil" =>
+  }
+
   attr_reader :black_pieces, :white_pieces, :black_king, :white_king
 
   def initialize
@@ -27,7 +31,7 @@ class Board
     [[7,2],[7,5].each {|pos| @board[pos] = Bishop.new(pos,:white,self)}
     @board[0,3] = Queen.new(pos,:black,self)
     @board[7,3] = Queen.new(pos,:white,self)
-    
+
     @black_king = King.new(pos,:black,self)
     @board[0,4] = @black_king
 
@@ -39,6 +43,32 @@ class Board
   def [](pos)
     x, y = pos
     @grid[x][y]
+  end
+
+  def render
+
+    @grid.map do |row| #set to variable
+      row.map do |space|
+        case space.class
+        when Pawn
+          CHARACTERS["Pawn"].colorize(COLORS[space.color])
+        when Rook
+          CHARACTERS["Rook"].colorize(COLORS[space.color])
+        when Knight
+          CHARACTERS["Knight"].colorize(COLORS[space.color])
+        when Bishop
+          CHARACTERS["Bishop"].colorize(COLORS[space.color])
+        when Queen
+          CHARACTERS["Queen"].colorize(COLORS[space.color])
+        when King
+          CHARACTERS["King"].colorize(COLORS[space.color])
+        else
+          CHARACTERS["nil"].colorize(:red)
+        end
+
+      end
+    end
+
   end
 
 end

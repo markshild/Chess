@@ -6,8 +6,8 @@ class SteppingPiece < Piece
     super
   end
 
-  def stepping_move
-    new_positions = []
+  def move_pool
+    @move_pool = []
 
     @delta.each do |(x,y)|
         new_positions << [@pos[0]+x, @pos[1]+y] #row,col pair
@@ -16,7 +16,7 @@ class SteppingPiece < Piece
     new_positions.select! {|(x,y)| x.between?(0,7) && y.between?(0,7) }
     new_positions.select! {|pos| @board[pos].nil? || @board[pos].color != self.color}
 
-    new_positions
+    @move_pool
   end
 
 end
@@ -36,9 +36,6 @@ class King < SteppingPiece
     ]
   end
 
-  
-
-
 end
 
 class Knight < SteppingPiece
@@ -55,8 +52,5 @@ class Knight < SteppingPiece
     [ 2,  1]
     ]
   end
-
-
-
 
 end

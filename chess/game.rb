@@ -21,7 +21,7 @@ class Game
         check = wp.move_pool.include?(@board.black_king.pos)
         return true if check
       end
-      
+
     end
     false
   end
@@ -42,8 +42,15 @@ class Game
 
   end
 
+  def draw?
+    true if (@board.white_pieces + @board.black_pieces).count == 2
+  end
 
+  def play
+    until checkmate?
 
+    end
+  end
 
 
 end
