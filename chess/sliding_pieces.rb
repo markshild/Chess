@@ -1,6 +1,6 @@
-require "dependencies.rb" 
+require "./dependencies.rb"
 
-class SlidingPiece < Pieece
+class SlidingPiece < Piece
 
   protected
 
@@ -8,10 +8,10 @@ class SlidingPiece < Pieece
     move_array = []
     current_col = @pos[1]
     until current_col > 7 #looks to the right
-      if @board[@pos[0],current_col].nil?
+      if @board[[@pos[0],current_col]].nil?
         move_array << [@pos[0],current_col]
       else
-        piece = @board[pos[0], current_col]
+        piece = @board[[pos[0], current_col]]
         if piece.color == self.color
           break
         else
@@ -23,10 +23,10 @@ class SlidingPiece < Pieece
     end
     current_col = @pos[1]
     until current_col < 0 # looks to the left
-      if @board[@pos[0],current_col].nil?
+      if @board[[@pos[0],current_col]].nil?
         move_array << [@pos[0],current_col]
       else
-        piece = @board[pos[0], current_col]
+        piece = @board[[pos[0], current_col]]
         if piece.color == self.color
           break
         else
@@ -43,10 +43,10 @@ class SlidingPiece < Pieece
     move_array = []
     current_row = @pos[0]
     until current_row > 7 #looks up
-      if @board[current_row,@pos[1]].nil?
+      if @board[[current_row,@pos[1]]].nil?
         move_array << [current_row,@pos[1]]
       else
-        piece = @board[current_row,@pos[1]]
+        piece = @board[[current_row,@pos[1]]]
         if piece.color == self.color
           break
         else
@@ -54,14 +54,14 @@ class SlidingPiece < Pieece
           break
         end
       end
-      current_col += 1
+      current_row += 1
     end
     current_row = @pos[0]
     until current_row < 0 # looks down
-      if @board[current_row,@pos[1]].nil?
+      if @board[[current_row,@pos[1]]].nil?
         move_array << [current_row,@pos[1]]
       else
-        piece = @board[current_row,@pos[1]]
+        piece = @board[[current_row,@pos[1]]]
         if piece.color == self.color
           break
         else
@@ -69,7 +69,7 @@ class SlidingPiece < Pieece
           break
         end
       end
-      current_col -= 1
+      current_row -= 1
     end
     move_array
   end
@@ -78,10 +78,10 @@ class SlidingPiece < Pieece
     move_array = []
     row, col = @pos
     until row < 0 || col > 7
-      if @board[row,col].nil?
+      if @board[[row,col]].nil?
         move_array << [row,col]
       else
-        piece = @board[row,col]
+        piece = @board[[row,col]]
         if piece.color == self.color
           break
         else
@@ -94,10 +94,10 @@ class SlidingPiece < Pieece
     end
     row, col = @pos
     until row > 7 || col < 0
-      if @board[row,col].nil?
+      if @board[[row,col]].nil?
         move_array << [row,col]
       else
-        piece = @board[row,col]
+        piece = @board[[row,col]]
         if piece.color == self.color
           break
         else
@@ -115,10 +115,10 @@ class SlidingPiece < Pieece
     move_array = []
     row, col = @pos
     until row > 7 || col > 7
-      if @board[row,col].nil?
+      if @board[[row,col]].nil?
         move_array << [row,col]
       else
-        piece = @board[row,col]
+        piece = @board[[row,col]]
         if piece.color == self.color
           break
         else
@@ -132,10 +132,10 @@ class SlidingPiece < Pieece
 
       row, col = @pos
     until row < 0 || col < 0
-        if @board[row,col].nil?
+        if @board[[row,col]].nil?
           move_array << [row,col]
         else
-          piece = @board[row,col]
+          piece = @board[[row,col]]
           if piece.color == self.color
             break
           else

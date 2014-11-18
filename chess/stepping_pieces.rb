@@ -1,4 +1,4 @@
-require "dependencies.rb" 
+require "./dependencies.rb"
 
 class SteppingPiece < Piece
   def initialize(pos, color, board)
@@ -10,11 +10,11 @@ class SteppingPiece < Piece
     @move_pool = []
 
     @delta.each do |(x,y)|
-        new_positions << [@pos[0]+x, @pos[1]+y] #row,col pair
+        @move_pool << [@pos[0]+x, @pos[1]+y] #row,col pair
     end
 
-    new_positions.select! {|(x,y)| x.between?(0,7) && y.between?(0,7) }
-    new_positions.select! {|pos| @board[pos].nil? || @board[pos].color != self.color}
+    @move_pool.select! {|(x,y)| x.between?(0,7) && y.between?(0,7) }
+    @move_pool.select! {|pos| @board[pos].nil? || @board[pos].color != self.color}
 
     @move_pool
   end

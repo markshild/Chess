@@ -1,4 +1,4 @@
-require "dependencies.rb" 
+require "./dependencies.rb" 
 
 class Game
 

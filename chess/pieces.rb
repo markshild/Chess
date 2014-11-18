@@ -1,8 +1,8 @@
-require "dependencies.rb" 
+require "./dependencies.rb"
 
 class Piece
 
-  attr_reader :pos, :move_pool
+  attr_reader :pos, :move_pool, :color
 
   def initialize(pos, color, board)
     @pos = pos
