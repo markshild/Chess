@@ -1,8 +1,6 @@
 class InputError < StandardError
 end
 
-class GuessError < StandardError
-end
 
 class Game
   MAX_GUESSES = 10
@@ -82,8 +80,7 @@ class HumanPlayer
     puts "Guess a letter"
     guess_letter = gets.chomp
 
-    raise GuessError if Game.guessed.include?(guess_letter)
-    raise InputError unless guess_letter.match(\A[a-z]\z)
+    raise InputError unless guess_letter.match(/\A[a-z]\z/)
 
   end
 
