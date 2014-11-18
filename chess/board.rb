@@ -1,7 +1,7 @@
 class Board
 
   CHARACTERS {
-    "nil" =>  ,
+    "nil" => ■ ,
     "white pawn" => ♙ ,
     "black pawn" => ♟ ,
     "white rook" => ♖ ,
@@ -59,18 +59,17 @@ class Board
 
   def render
 
-    @grid.map do |row| #set to variable
+    rendered_board = @grid.map do |row| #set to variable
       row.map do |space|
-
         if space.nil?
           CHARACTERS["nil"].colorize(:red)
         else
           CHARACTERS["#{space.color.to_s} #{space.class.to_s.downcase}"]
         end
-
       end
     end
 
+    rendered_board
   end
 
 end

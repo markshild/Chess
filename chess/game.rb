@@ -46,8 +46,25 @@ class Game
     true if (@board.white_pieces + @board.black_pieces).count == 2
   end
 
+  def display
+    display_array = @board.render.map.with_index do |row, rowidx|
+      row.unshift(rowidx+1).join(" ")
+    end
+
+    display_array.unshift("  A B C D E F G H")
+
+    puts display
+  end
+
+
   def play
-    until checkmate?
+    until checkmate? || draw?
+      @board.render
+      get_move(@current_move)
+      check?
+
+      move(#receives from get_move)
+      switch_turn
 
     end
   end
