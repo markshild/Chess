@@ -7,11 +7,12 @@ class SlidingPiece < Piece
   def horizontal_move
     move_array = []
     current_col = @pos[1]
+    
     until current_col > 7 #looks to the right
-      if @board[[@pos[0],current_col]].nil?
+      if @board[[@pos[0],current_col]].nil? #instead of this, probably generate an array of ALL positions (+/- 8, and just "next" if out of bounds)
         move_array << [@pos[0],current_col]
       else
-        piece = @board[[pos[0], current_col]]
+        piece = @board[[pos[0], current_col]] #this should be fine, maybe refactor names
         if piece.color == self.color
           break
         else
@@ -22,6 +23,7 @@ class SlidingPiece < Piece
       current_col += 1
     end
     current_col = @pos[1]
+
     until current_col < 0 # looks to the left
       if @board[[@pos[0],current_col]].nil?
         move_array << [@pos[0],current_col]

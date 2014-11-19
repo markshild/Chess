@@ -18,10 +18,10 @@ class Board
     "black king" => "♚"
   }
 
-  attr_reader :black_pieces, :white_pieces, :black_king, :white_king
+  attr_reader :black_pieces, :white_pieces, :black_king, :white_king, :grid
 
   def initialize
-    start_board
+    @grid = Array.new(8) {Array.new(8){nil}}
   end
 
   def black_pieces
@@ -34,7 +34,7 @@ class Board
 
 
   def start_board
-    @grid = Array.new(8) {Array.new(8){nil}}
+
     @grid[1].map!.with_index {|space,ind| Pawn.new([1,ind],:black,self)}
     @grid[6].map!.with_index {|space,ind| Pawn.new([6,ind],:white,self)}
     [[0,0],[0,7]].each {|pos| self[pos] = Rook.new(pos,:black,self)}

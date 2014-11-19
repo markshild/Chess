@@ -8,9 +8,10 @@ class Game
     @white = player1
     @black = player2
     @current_move = :white
+    @board.start_board
   end
 
-  def check?(board, color) #Checks if current_move player's king is in check, maybe should instead take a board parameter
+  def check?(board = @board, color = @current_move) #Checks if current_move player's king is in check, maybe should instead take a board parameter
     if color == :white
 
       board.black_pieces.each do |bp|
@@ -45,11 +46,11 @@ class Game
     process(coords) #handles actual transposition and deletion. Only run if ALL checks pass
   end
 
-  def process(coords)
+  def process(coords,board = @board)
     start, finish = coords
 
-    @board[finish] = receiving_space #copies instance of piece to finish space
-    @board[start] = starting_space
+    board[finish] = receiving_space #copies instance of piece to finish space
+    board[start] = starting_space
     receiving_space = starting_space
 
     receiving_space.pos = finish #sets new pos data for moved piece
@@ -58,7 +59,26 @@ class Game
   end
 
   def checkmate?
-
+    if @current_move = :white
+      @board.white_pieces.each do |piece|
+        piece.move_pool.each do |move|
+          dup = dup_board
+          new_move = [piece.pos,move]
+          process(new_move, dup)
+          return false unless check?(dup)
+        end
+      end
+    else
+      @board.black_pieces.each do |piece|
+        piece.move_pool.each do |move|
+          dup = dup_board
+          new_move = [piece.pos,move]
+          process(new_move, dup)
+          return false unless check?(dup)
+        end
+      end
+    end
+    true
   end
 
   def check_move(pro_move)
@@ -75,7 +95,9 @@ class Game
 
     raise InvalidMoveError if !possible_moves.include?(finish) #finish space is in possible moveset
 
-    #raise CheckError if check?
+    dup = dup_board
+    process(pro_move, dup)
+    raise CheckError if check?(dup)
   end
 
   def winner
@@ -101,16 +123,37 @@ class Game
   end
 
   def play
-    until checkmate? || draw?
+    until draw?
       @board.render
-      get_move(@current_move)
-      check?
 
-      move(#receives from get_move)
+      if check?
+        if checkmate?
+          puts "{@current_move.to_s.capitalize} Loses!"
+          break
+        else
+          puts "#{@current_move.to_s.capitalize} is in Check!"
+        end
+      end
+
+      move
       switch_turn
-
     end
   end
 
+
+  def dup_board
+    new_board = Board.new
+    @board.grid.each_index do |row,rind|
+      row.each_index do |col, cind|
+        next if @board[[rind,cind]].nil?
+        piece = @board[[rind,cind]]
+        new_board[rind][cind] = piece.class.new([rind,cind], piece.color, new_board)
+      end
+    end
+    new_board
+  end
+
+
+  end
 
 end
