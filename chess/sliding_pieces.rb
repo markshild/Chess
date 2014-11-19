@@ -78,6 +78,7 @@ class SlidingPiece < Piece
 
     row, col = pos
     until row > 7 || col < 0
+
       if @board[[row,col]].nil?
         move_array << [row,col]
       else

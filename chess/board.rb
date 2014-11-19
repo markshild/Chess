@@ -18,7 +18,8 @@ class Board
     "black king" => "♚"
   }
 
-  attr_reader :black_pieces, :white_pieces, :black_king, :white_king, :grid
+  attr_reader :black_pieces, :white_pieces, :grid
+  attr_accessor :black_king, :white_king
 
   def initialize
     @grid = Array.new(8) {Array.new(8){nil}}
