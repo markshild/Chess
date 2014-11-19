@@ -5,31 +5,33 @@ class Pawn < Piece
 
   def move_pool
     pool = []
-    if (self.color == :black) && (pos[0]+1 <= 7)
-      pool << [ pos[0]+1 , pos[1] ] if @board[ [ pos[0]+1,pos[1] ] ].nil?
+    row = pos[0]
+    col = pos[1]
+    if (self.color == :black) && (row+1 <= 7)
+      pool << [ row+1 , col ] if @board[ [ row+1,col ] ].nil? #space ahead is nil
 
-      [ [pos[0]+1,pos[1] - 1] , [ pos[0] + 1, pos[1] + 1] ].each do |move|
+      [ [row+1,col - 1] , [ row + 1, col + 1] ].each do |move| #only diagonal if can capture
         next if @board[move].nil?
         pool << move if @board[move].color == :white
       end
-    elsif (pos[0] - 1 >= 0)
-      pool << [ pos[0]-1, pos[1] ] if @board[ [ pos[0]-1,pos[1] ] ].nil?
+    elsif (row - 1 >= 0)
+      pool << [ row-1, col ] if @board[ [ row-1,col ] ].nil?
 
-      [ [ pos[0] - 1, pos[1]-1 ], [pos[0]-1, pos[1]+1 ] ].each do |move|
+      [ [ row - 1, col-1 ], [row-1, col+1 ] ].each do |move|
         next if @board[move].nil?
         pool << move if @board[move].color == :black
       end
     end
-    if color == :white && pos[0] == 6
+    if color == :white && row == 6
 
-      if [@board[[pos[0] - 2, pos[1]]], @board[[pos[0] - 1, pos[1]]]].all? {|item| item.nil?}
-        pool << [pos[0] - 2, pos[1]]
+      if [@board[[row - 2, col]], @board[[row - 1, col]]].all? {|item| item.nil?}
+        pool << [row - 2, col]
       end
 
-    elsif color == :black && pos[0] == 1
+    elsif color == :black && row == 1
 
-      if [@board[[pos[0] + 2, pos[1]]], @board[[pos[0] + 1, pos[1]]]].all? {|item| item.nil?}
-        pool << [pos[0] + 2, pos[1]]
+      if [@board[[row + 2, col]], @board[[row + 1, col]]].all? {|item| item.nil?}
+        pool << [row + 2, col]
       end
     end
     pool

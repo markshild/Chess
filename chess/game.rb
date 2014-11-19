@@ -34,8 +34,7 @@ class Game
       end
 
       move
-      if last_pawns?
-      #promote
+      promote if last_pawns?
       switch_turn
     end
   end
@@ -107,6 +106,7 @@ class Game
 
   def check?(current_board = @board, color = @current_move) #Checks if current_move player's king is in check, maybe should instead take a board parameter
     if color == :white
+    
       current_board.black_pieces.each do |bp|
 
         check = bp.move_pool.include?(current_board.white_king.pos)
@@ -163,9 +163,10 @@ class Game
 
         if piece.class == King
           if piece.color == :white
-            new_board.white_king = piece
+            new_board.white_king = new_board[[rind, cind]]
+
           else
-            new_board.black_king = piece
+            new_board.black_king = new_board[[rind, cind]]
           end
         end
 
@@ -185,7 +186,7 @@ class Game
     promote_piece = player.promote_prompt
 
     last_rows = @board.grid[0].flatten + @board.grid[7].flatten
-    last_rows.select? {|space| space.class == Pawn}
+    last_rows.select! {|space| space.class == Pawn}
     pawn = last_rows[0]
 
     case promote_piece
@@ -197,6 +198,7 @@ class Game
       @board[pawn.pos] = Bishop.new(pawn.pos,pawn.color,@board)
     when "r"
       @board[pawn.pos] = Rook.new(pawn.pos,pawn.color,@board)
+    else
     end
   end
 end

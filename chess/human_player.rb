@@ -33,6 +33,11 @@ CONVERSION = {
     move = self.class.translate(unp_move) #move = [[0,1],[1,1]]
   end
 
+  def promote_prompt
+    puts "Congratulations #{@name}, what do you want to promote your pawn to?"
+    choice = gets.chomp.downcase
+  end
+
   protected
 
   def self.translate(pos)
