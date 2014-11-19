@@ -22,6 +22,7 @@ class Game
 
   def play
     until draw?
+      system('clear')
       display
 
       if check?
@@ -44,13 +45,19 @@ class Game
   end
 
   def display #protect
-    display_array =
+    working_array =
 
     @board.render.map.with_index do |row, rowidx|
       row.unshift(8 - rowidx).join(" ║ ")
     end
 
-    display_array.unshift("  A B C D E F G H")
+    display_array = ["    A   B   C   D   E   F   G   H",
+                     "  ╔═══╦═══╦═══╦═══╦═══╦═══╦═══╦═══╗"]
+    8.times do display_array << (working_array.shift) + ' ║'
+    display_array << "  ╠═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╣"
+    end
+    display_array.pop
+    display_array << "  ╚═══╩═══╩═══╩═══╩═══╩═══╩═══╩═══╝"
 
     puts display_array
   end
