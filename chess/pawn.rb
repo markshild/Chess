@@ -20,16 +20,18 @@ class Pawn < Piece
         pool << move if @board[move].color == :black
       end
     end
-    # if color == :white && pos[0] == 6
-    #   if [@board[[pos[0] - 2, pos[1]]], @board[[pos[0] - 1, pos[1]]].all? {|item| item.nil?}
-    #     pool << [pos[0] - 2, pos[1]]
-    #   end
-    #
-    # elsif color == :black && pos[0] == 1
-    #   if [@board[[pos[0] + 2, pos[1]]], @board[[pos[0] + 1, pos[1]]].all? {|item| item.nil?}
-    #     pool << [pos[0] + 2, pos[1]]
-    #   end
-    # end
+    if color == :white && pos[0] == 6
+
+      if [@board[[pos[0] - 2, pos[1]]], @board[[pos[0] - 1, pos[1]]]].all? {|item| item.nil?}
+        pool << [pos[0] - 2, pos[1]]
+      end
+
+    elsif color == :black && pos[0] == 1
+
+      if [@board[[pos[0] + 2, pos[1]]], @board[[pos[0] + 1, pos[1]]]].all? {|item| item.nil?}
+        pool << [pos[0] + 2, pos[1]]
+      end
+    end
     pool
   end
 

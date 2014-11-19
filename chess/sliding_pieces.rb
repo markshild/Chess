@@ -6,29 +6,31 @@ class SlidingPiece < Piece
 
   def horizontal_move
     move_array = []
-    current_col = pos[1]
+    col = pos[1]
+    row = pos[0]
 
-    until current_col > 7 #looks to the right
-      if @board[[pos[0],current_col]].nil? #instead of this, probably generate an array of ALL positions (+/- 8, and just "next" if out of bounds)
-        move_array << [pos[0],current_col]
-      else
-        piece = @board[[pos[0],current_col]] #This is the piece occupying the space
-        move_array << [pos[0],current_col] if (piece.color != self.color) #An enemy piece
+    until col > 7 #looks to the right
+      if @board[[row,col]].nil? #instead of this, probably generate an array of ALL positions (+/- 8, and just "next" if out of bounds)
+        move_array << [row,col]
+      else #space not empty
+        piece = @board[[row,col]] #This is the piece occupying the space
+
+        move_array << [row,col] if (piece.color != self.color) #An enemy piece
         break if self != piece
       end
-      current_col += 1
+      col += 1
     end
 
-    current_col = pos[1]
-    until current_col < 0 # looks to the left
-      if @board[[pos[0],current_col]].nil?
-        move_array << [pos[0],current_col]
+    col = pos[1]
+    until col < 0 # looks to the left
+      if @board[[row,col]].nil?
+        move_array << [row,col]
       else
-        piece = @board[[pos[0],current_col]] #This is the piece occupying the space
-        move_array << [pos[0],current_col] if (piece.color != self.color) #An enemy piece
+        piece = @board[[row,col]] #This is the piece occupying the space
+        move_array << [row,col] if (piece.color != self.color) #An enemy piece
         break if self != piece
       end
-      current_col -= 1
+      col -= 1
     end
 
     move_array
@@ -36,27 +38,29 @@ class SlidingPiece < Piece
 
   def vertical_move
     move_array = []
-    current_row = pos[0]
-    until current_row > 7 #looks up
-      if @board[[current_row,pos[1]]].nil?
-        move_array << [current_row,pos[1]]
+    row = pos[0]
+    col = pos[1]
+    until row > 7 #looks up
+      if @board[[row,col]].nil?
+        move_array << [row,col]
       else #take over if space is occupied
-          piece = @board[[current_row,pos[1]]] #This is the piece occupying the space
-          move_array << [current_row,pos[1]] if (piece.color != self.color) #An enemy piece
+          piece = @board[[row,col]] #This is the piece occupying the space
+          move_array << [row,col] if (piece.color != self.color) #An enemy piece
           break if self != piece
       end
-      current_row += 1
+      row += 1
     end
-    current_row = pos[0]
-    until current_row < 0 # looks down
-      if @board[[current_row,pos[1]]].nil?
-        move_array << [current_row,pos[1]]
+
+    row = pos[0]
+    until row < 0 # looks down
+      if @board[[row,col]].nil?
+        move_array << [row,col]
       else #take over if space is occupied
-        piece = @board[[current_row,pos[1]]] #This is the piece occupying the space
-        move_array << [current_row,pos[1]] if (piece.color != self.color) #An enemy piece
+        piece = @board[[row,col]] #This is the piece occupying the space
+        move_array << [row,col] if (piece.color != self.color) #An enemy piece
         break if self != piece
       end
-      current_row -= 1
+      row -= 1
     end
     move_array
   end
