@@ -70,7 +70,7 @@ class Board
     rendered_board = @grid.map do |row| #set to variable
       row.map do |space|
         if space.nil?
-          CHARACTERS["nil"]
+          " "
         else
           CHARACTERS["#{space.color.to_s} #{space.class.to_s.downcase}"]
         end

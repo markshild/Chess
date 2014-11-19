@@ -44,8 +44,10 @@ class Game
   end
 
   def display #protect
-    display_array = @board.render.map.with_index do |row, rowidx|
-      row.unshift(8 - rowidx).join(" ")
+    display_array =
+
+    @board.render.map.with_index do |row, rowidx|
+      row.unshift(8 - rowidx).join(" ║ ")
     end
 
     display_array.unshift("  A B C D E F G H")
@@ -106,7 +108,7 @@ class Game
 
   def check?(current_board = @board, color = @current_move) #Checks if current_move player's king is in check, maybe should instead take a board parameter
     if color == :white
-    
+
       current_board.black_pieces.each do |bp|
 
         check = bp.move_pool.include?(current_board.white_king.pos)
@@ -202,3 +204,6 @@ class Game
     end
   end
 end
+
+#═	║	╒	╓	╔	╕	╖	╗	╘	╙	╚	╛	╜	╝	╞	╟
+#╠	╡	╢	╣	╤	╥	╦	╧	╨	╩	╪	╫	╬
