@@ -1,3 +1,5 @@
+require "./dependencies.rb"
+
 class HumanPlayer
 
 CONVERSION = {
@@ -26,7 +28,7 @@ CONVERSION = {
   end
 
   def get_move
-    puts "Enter start and end coordinates Ex a7 b7"
+    puts "#{@name} Enter start and end coordinates Ex a7 b7"
     unp_move = gets.chomp.downcase.split # unp_move = ["a7,"b7"]
     move = self.class.translate(unp_move) #move = [[0,1],[1,1]]
   end
@@ -35,8 +37,8 @@ CONVERSION = {
 
   def self.translate(pos)
 
-    coords.map! do |coord|
-      coord.split('').map do |n|
+    pos.map! do |coord|
+      coord.split('').reverse.map do |n|
         CONVERSION[n]
       end
     end

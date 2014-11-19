@@ -1,7 +1,15 @@
 require "./dependencies.rb"
 
+  class CheckError < StandardError
+  end
+
+  class InvalidMoveError < StandardError
+  end
+
 
 class Game
+
+  attr_reader :board
 
   def initialize(player1,player2)
     @board = Board.new
@@ -47,19 +55,21 @@ class Game
   end
 
   def process(coords,board = @board)
+    p coords
     start, finish = coords
+    p start
+    p finish
 
-    board[finish] = receiving_space #copies instance of piece to finish space
-    board[start] = starting_space
-    receiving_space = starting_space
+    board[finish] = board[start] #move piece to new position
 
-    receiving_space.pos = finish #sets new pos data for moved piece
 
-    starting_space = nil #deletes instance of space
+    board[finish].pos = finish #sets new pos data for moved piece
+
+    board[start] = nil #deletes instance of space
   end
 
   def checkmate?
-    if @current_move = :white
+    if @current_move == :white
       @board.white_pieces.each do |piece|
         piece.move_pool.each do |move|
           dup = dup_board
@@ -85,11 +95,15 @@ class Game
     start, finish = pro_move
 
     #raise InvalidMoveErrpr
-    raise InvalidMoveError if pro_move.flatten.any? ({num} num < 0 || 7 < num ) #all moves in board?
+    raise InvalidMoveError if pro_move.flatten.any? {|num| (num < 0) || (7 < num )} #all moves in board?
 
-    if (!@board[start].nil?) || (@board[start].color != @current_turn)
-      raise InvalidMoveError #space is nil or piece is not current players
+    if @board[start].nil?
+      raise InvalidMoveError
+    elsif (@board[start].color != @current_move)
+       raise InvalidMoveError #space is nil or piece is not current players
     end
+
+
 
     possible_moves = @board[start].move_pool
 
@@ -119,12 +133,13 @@ class Game
   end
 
   def switch_turn
-    @current_turn == :white ? @current_turn = :black : @current_turn = :white
+    @current_move == :white ? @current_move = :black : @current_move = :white
   end
 
   def play
     until draw?
-      @board.render
+      generate_move_pool
+      display
 
       if check?
         if checkmate?
@@ -140,20 +155,26 @@ class Game
     end
   end
 
+  def generate_move_pool
+    @board.grid.flatten.each do |space|
+      next if space.nil?
+      space.move_pool
+    end
+  end
+
 
   def dup_board
     new_board = Board.new
-    @board.grid.each_index do |row,rind|
-      row.each_index do |col, cind|
+    @board.grid.each_with_index do |row, rind|
+      row.each_index do |cind|
         next if @board[[rind,cind]].nil?
         piece = @board[[rind,cind]]
-        new_board[rind][cind] = piece.class.new([rind,cind], piece.color, new_board)
+        new_board[[rind, cind]] = piece.class.new([rind,cind], piece.color, new_board)
       end
     end
     new_board
   end
 
 
-  end
 
 end

@@ -2,7 +2,7 @@ require "./dependencies.rb"
 
 class Piece
 
-  attr_reader :move_pool, :color
+  attr_reader :color
   attr_accessor :pos
 
   def initialize(pos, color, board)
@@ -12,7 +12,7 @@ class Piece
   end
 
   def move_pool
-
+    raise NotImplementedError
   end
 
 

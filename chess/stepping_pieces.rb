@@ -7,16 +7,16 @@ class SteppingPiece < Piece
   end
 
   def move_pool
-    @move_pool = []
+    pool = []
 
     @delta.each do |(x,y)|
-        @move_pool << [@pos[0]+x, @pos[1]+y] #row,col pair
+        pool << [pos[0]+x, pos[1]+y] #row,col pair
     end
 
-    @move_pool.select! {|(x,y)| x.between?(0,7) && y.between?(0,7) }
-    @move_pool.select! {|pos| @board[pos].nil? || @board[pos].color != self.color}
+    pool.select! {|(x,y)| x.between?(0,7) && y.between?(0,7) }
+    pool.select! {|pos| @board[pos].nil? || @board[pos].color != self.color}
 
-    @move_pool
+    pool
   end
 
 end
