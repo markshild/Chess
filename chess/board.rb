@@ -20,8 +20,9 @@ class Board
   attr_reader :black_pieces, :white_pieces, :grid
   attr_accessor :black_king, :white_king
 
-  def initialize
+  def initialize(game)
     @grid = Array.new(8) {Array.new(8){nil}}
+    @game = game
   end
 
   def black_pieces
@@ -35,21 +36,21 @@ class Board
 
   def start_board
 
-    @grid[1].map!.with_index {|space,ind| Pawn.new([1,ind],:black,self)}
-    @grid[6].map!.with_index {|space,ind| Pawn.new([6,ind],:white,self)}
-    [[0,0],[0,7]].each {|pos| self[pos] = Rook.new(pos,:black,self)}
-    [[7,0],[7,7]].each {|pos| self[pos] = Rook.new(pos,:white,self)}
-    [[0,1],[0,6]].each {|pos| self[pos] = Knight.new(pos,:black,self)}
-    [[7,1],[7,6]].each {|pos| self[pos] = Knight.new(pos,:white,self)}
-    [[0,2],[0,5]].each {|pos| self[pos] = Bishop.new(pos,:black,self)}
-    [[7,2],[7,5]].each {|pos| self[pos] = Bishop.new(pos,:white,self)}
-    self[[0,3]] = Queen.new([0,3],:black,self)
-    self[[7,3]] = Queen.new([7,3],:white,self)
+    @grid[1].map!.with_index {|space,ind| Pawn.new([1,ind],:black,self, @game)}
+    @grid[6].map!.with_index {|space,ind| Pawn.new([6,ind],:white,self, @game)}
+    [[0,0],[0,7]].each {|pos| self[pos] = Rook.new(pos,:black,self, @game)}
+    [[7,0],[7,7]].each {|pos| self[pos] = Rook.new(pos,:white,self, @game)}
+    [[0,1],[0,6]].each {|pos| self[pos] = Knight.new(pos,:black,self, @game)}
+    [[7,1],[7,6]].each {|pos| self[pos] = Knight.new(pos,:white,self, @game)}
+    [[0,2],[0,5]].each {|pos| self[pos] = Bishop.new(pos,:black,self, @game)}
+    [[7,2],[7,5]].each {|pos| self[pos] = Bishop.new(pos,:white,self, @game)}
+    self[[0,3]] = Queen.new([0,3],:black,self, @game)
+    self[[7,3]] = Queen.new([7,3],:white,self, @game)
 
-    @black_king = King.new([0,4],:black,self)
+    @black_king = King.new([0,4],:black,self, @game)
     self[[0,4]] = @black_king
 
-    @white_king = King.new([7,4],:white,self)
+    @white_king = King.new([7,4],:white,self, @game)
     self[[7,4]] = @white_king
 
   end

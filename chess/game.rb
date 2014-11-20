@@ -12,12 +12,15 @@ class Game
   attr_reader :board
 
   def initialize(player1,player2)
-    @board = Board.new
+    @board = Board.new(self)
     @white = player1
     @black = player2
     @current_move = :white
     @board.start_board
     play
+  end
+
+  def inspect
   end
 
   def play
@@ -34,15 +37,16 @@ class Game
         end
       end
 
-      move
+      coords = move
+      process_move(coords)
       promote if last_pawns?
       switch_turn
     end
   end
 
   def draw?
-    true if (@board.white_pieces + @board.black_pieces).count == 2
-    if !check? && checkmate?
+    return true if (@board.white_pieces + @board.black_pieces).count == 2
+    !check? && checkmate?
   end
 
   def display #protect
@@ -80,7 +84,7 @@ class Game
       retry
     end
 
-    process(coords) #handles actual transposition and deletion. Only run if ALL checks pass
+    coords
   end
 
   def check_move(pro_move)
@@ -105,6 +109,10 @@ class Game
 
   def process(coords,board = @board)
     start, finish = coords
+
+    if @board[start].special_moves.include?(finish)
+      @board[start].perform_special_move(finish)
+    end
 
     board[finish] = board[start] #move piece to new position
 
@@ -215,5 +223,8 @@ class Game
   end
 end
 
-#═	║	╒	╓	╔	╕	╖	╗	╘	╙	╚	╛	╜	╝	╞	╟
-#╠	╡	╢	╣	╤	╥	╦	╧	╨	╩	╪	╫	╬
+if __FILE__ == $PROGRAM_NAME
+  e = HumanPlayer.new("Ed")
+  h = HumanPlayer.new("Hank")
+  Game.new(e,h).play
+end
