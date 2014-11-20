@@ -42,6 +42,7 @@ class Game
 
   def draw?
     true if (@board.white_pieces + @board.black_pieces).count == 2
+    if !check? && checkmate?
   end
 
   def display #protect
@@ -109,6 +110,8 @@ class Game
 
 
     board[finish].pos = finish #sets new pos data for moved piece
+
+    board[finish].moved = true #helper for castling
 
     board[start] = nil #deletes instance of space
   end

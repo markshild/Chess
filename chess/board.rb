@@ -3,7 +3,6 @@ require "./dependencies.rb"
 class Board
 
   CHARACTERS = {
-    "nil" => "■"  ,
     "white pawn" => "♙" ,
     "black pawn" => "♟" ,
     "white rook" => "♖" ,
