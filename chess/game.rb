@@ -43,15 +43,19 @@ class Game
     true if (@board.white_pieces + @board.black_pieces).count == 2
   end
 
-  def display #protect
+  def display
     display_array =
 
     @board.render.map.with_index do |row, rowidx|
-      row.unshift(8 - rowidx).join(" ║ ")
+      row.unshift(8 - rowidx).join(" ║ ") + " ║"
     end
 
-    display_array.unshift("  A B C D E F G H")
-
+    [7,6,5,4,3,2,1].each do |num|
+      display_array.insert(num, "  ╠═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╣")
+    end
+    display_array.unshift("  ╔═══╦═══╦═══╦═══╦═══╦═══╦═══╦═══╗")
+    display_array.unshift("    A   B   C   D   E   F   G   H")
+    display_array << "  ╚═══╩═══╩═══╩═══╩═══╩═══╩═══╩═══╝"
     puts display_array
   end
 
@@ -62,7 +66,7 @@ class Game
   def move
     player = (@current_move == :white ? @white : @black)
     begin
-      coords = player.get_move #coords = [[0,1],[1,1]]
+      coords = player.get_move
       check_move(coords)
     rescue InvalidMoveError => e
       puts e.message
@@ -205,5 +209,10 @@ class Game
   end
 end
 
-#═	║	╒	╓	╔	╕	╖	╗	╘	╙	╚	╛	╜	╝	╞	╟
-#╠	╡	╢	╣	╤	╥	╦	╧	╨	╩	╪	╫	╬
+if __FILE__ == $PROGRAM_NAME
+  p1 = HumanPlayer.new("Player 1")
+  p2 = HumanPlayer.new("Player 2")
+  g = Game.new(p1, p2)
+
+
+end
